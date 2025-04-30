@@ -32,9 +32,9 @@ def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
     train_set = Subset(train_set, train_indices)
     validation_set = Subset(validation_set, val_indices)
 
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=2)
-    validation_loader = DataLoader(validation_set, batch_size=batch_size, shuffle=False, num_workers=2)
-    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=2)
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0)
+    validation_loader = DataLoader(validation_set, batch_size=batch_size, shuffle=False, num_workers=0)
+    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=0)
 
     return train_loader, validation_loader, test_loader
 
