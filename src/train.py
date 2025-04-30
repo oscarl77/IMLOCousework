@@ -1,46 +1,36 @@
 import torch
 
+def train_model(model, loss_fn, optimizer, train_loader):
+    model.train()
+    avg_train_loss = 0
+    running_loss = 0.0
+    correct_train = 0
+    total_train = 0
 
-def train(model, epochs, loss_fn, optimizer, train_loader):
-    train_losses = []
-    val_losses = []
-    train_accuracies = []
-    val_accuracies = []
+    for inputs, labels in train_loader:
+        # zero the parameter gradients
+        optimizer.zero_grad()
 
-    for epoch in range(epochs):
-        model.train()
-        running_loss = 0.0
-        correct_train = 0
-        total_train = 0
+        # forward pass
+        outputs = model(inputs)
 
-        for inputs, labels in train_loader:
-            inputs, labels = inputs, labels
+        # compute loss
+        loss = loss_fn(outputs, labels)
 
-            # zero the parameter gradients
-            optimizer.zero_grad()
+        # backward pass with optimisation
+        loss.backward()
+        optimizer.step()
+        running_loss += loss.item()
 
-            # forward pass
-            outputs = model(inputs)
+        # obtain model's predicted class label
+        _, predicted = torch.max(outputs, 1)
+        total_train += labels.size(0)
+        correct_train += (predicted == labels).sum().item()
 
-            # compute loss
-            loss = loss_fn(outputs, labels)
+    # calculate average loss per batch
+    avg_train_loss = running_loss / len(train_loader)
 
-            # backward pass with optimisation
-            loss.backward()
-            optimizer.step()
-            running_loss += loss.item()
+    # calculate training accuracy
+    train_accuracy = (correct_train / total_train) * 100
 
-            # obtain model's predicted class label
-            _, predicted = torch.max(outputs, 1)
-            total_train += labels.size(0)
-            correct_train += (predicted == labels).sum().item()
-
-        # calculate average loss per batch
-        avg_train_loss = running_loss / len(train_loader)
-        train_losses.append(avg_train_loss)
-
-        # calculate training accuracy
-        train_accuracy = (correct_train / total_train) * 100
-        train_accuracies.append(train_accuracy)
-
-        print(f'Epoch {epoch + 1}, Train Loss: {avg_train_loss:.4f}')
+    return avg_train_loss, train_accuracy
