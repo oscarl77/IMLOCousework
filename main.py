@@ -19,7 +19,7 @@ def main():
     # define hyperparameters
     batch_size = 64
     subset_size = 5000
-    epochs = 10
+    epochs = 5
 
     # load datasets
     train_loader, val_loader, test_loader = get_data_loaders(batch_size=batch_size, subset_size=subset_size)
