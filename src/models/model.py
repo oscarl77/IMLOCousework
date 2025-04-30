@@ -15,7 +15,7 @@ class CNNModel(nn.Module):
         self.pool2 = nn.MaxPool2d(2, 2)
 
         # 2 fully connected layers
-        self.fc1 = nn.Linear(32 * 4 * 4, output_features)
+        self.fc1 = nn.Linear(32 * 5 * 5, output_features)
         self.fc2 = nn.Linear(output_features, 10)
 
     def forward(self, x):
