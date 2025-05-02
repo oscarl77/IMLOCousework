@@ -17,13 +17,13 @@ random.seed(0)
 np.random.seed(0)
 
 def main():
-    experiment_name = 'CNN_vTEST'
+    experiment_name = ''
+    print(f"----------------{experiment_name}----------------")
+
     setup_training_time_logger()
-    start_time = time.time()
 
     # ensure cpu usage
     device = torch.device('cpu')
-    print(f"Using {device}")
 
     # define hyperparameters
     batch_size = 32
@@ -48,17 +48,20 @@ def main():
     adam_optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
     # Run training loop for model training and validation
+    start_time = time.time()
     train_losses, train_accuracies, val_losses, val_accuracies = train_loop(
         model,
         epochs,loss_fn,
         adam_optimizer,
         train_loader,
         val_loader,
-        experiment_name
     )
+    # Update total training time
     update_total_time(start_time, experiment_name)
 
-    plot_loss_and_accuracies(epochs, train_losses, train_accuracies, val_losses, val_accuracies)
+    # Plot and save graphs
+    plot_loss_and_accuracies(epochs, train_losses, train_accuracies,
+                             val_losses, val_accuracies, experiment_name)
 
 if __name__ == '__main__':
     main()
