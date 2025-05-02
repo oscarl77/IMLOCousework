@@ -1,10 +1,12 @@
+import os
 import matplotlib.pyplot as plt
 
-def plot_loss_and_accuracies(epochs, train_losses, train_accuracies, val_losses, val_accuracies):
+def plot_loss_and_accuracies(epochs, train_losses, train_accuracies, val_losses, val_accuracies, experiment_name):
     plt.figure(figsize=(12, 6))
     _plot_losses(epochs, train_losses, val_losses)
     _plot_accuracies(epochs, train_accuracies, val_accuracies)
     plt.tight_layout()
+    save_plots(experiment_name)
     plt.show()
 
 def _plot_losses(epochs, train_losses, val_losses):
@@ -26,3 +28,9 @@ def _plot_accuracies(epochs, train_accuracies, val_accuracies):
     plt.ylabel('Accuracy')
     plt.legend()
     plt.grid(True)
+
+def save_plots(experiment_name):
+    save_path = f'./experiments/{experiment_name}'
+    os.makedirs(save_path, exist_ok=True)
+    plot_filename = os.path.join(save_path, 'loss_accuracy_plot.png')
+    plt.savefig(plot_filename)
