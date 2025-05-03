@@ -26,9 +26,9 @@ def main():
     device = torch.device('cpu')
 
     # define hyperparameters
-    batch_size = 32
-    subset_size = 1000
-    epochs = 5
+    batch_size = 128
+    subset_size = None
+    epochs = 10
     learning_rate = 0.001
 
     log_experiment_details(experiment_name, subset_size, batch_size, learning_rate,
