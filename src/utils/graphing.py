@@ -17,7 +17,6 @@ def _plot_losses(epochs, train_losses, val_losses):
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    plt.grid(True)
 
 def _plot_accuracies(epochs, train_accuracies, val_accuracies):
     plt.subplot(1, 2, 2)
@@ -27,7 +26,6 @@ def _plot_accuracies(epochs, train_accuracies, val_accuracies):
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
-    plt.grid(True)
 
 def save_plots(experiment_name):
     save_path = f'./experiments/{experiment_name}'
