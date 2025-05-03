@@ -22,12 +22,14 @@ def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
     validation_set = datasets.CIFAR10(root=data_dir, train=True, download=True, transform=train_transform)
     test_set = datasets.CIFAR10(root=data_dir, train=False, download=True, transform=train_transform)
 
-    # Split training data into training and validation sets
+    if subset_size is None:
+        subset_size = len(train_set)
     if subset_size > len(train_set):
         raise ValueError(f"subset_size {subset_size} cannot be larger than size of full training data.")
 
+    # Split training data into training and validation sets
     data_indices = list(range(len(train_set)))
-    train_indices, val_indices = _split_indices(data_indices, validation_split, subset_size)
+    train_indices, val_indices = split_indices(data_indices, validation_split, subset_size)
 
     train_set = Subset(train_set, train_indices)
     validation_set = Subset(validation_set, val_indices)
@@ -39,7 +41,7 @@ def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
     return train_loader, validation_loader, test_loader
 
 
-def _split_indices(indices, validation_split, subset_size):
+def split_indices(indices, validation_split, subset_size):
     """
     Split data indices into training and validation sets
     :param indices: List of indices to be split
@@ -48,11 +50,8 @@ def _split_indices(indices, validation_split, subset_size):
     :return: A tuple of training and validation indices
     """
     np.random.shuffle(indices)
-    val_size = int(validation_split * len(indices))
-    if subset_size is not None:
-        train_size = subset_size - val_size
-    else:
-        train_size = len(indices) - val_size
+    val_size = int(validation_split * subset_size)
+    train_size = subset_size - val_size
     train_indices = indices[:train_size]
     val_indices = indices[train_size:]
     return train_indices, val_indices
