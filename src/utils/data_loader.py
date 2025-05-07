@@ -13,19 +13,30 @@ def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
     """
     data_dir = './data'
 
+    # Define two transforms, one for training and the other for validation + testing.
     train_transform = transforms.Compose([
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomCrop(32, 4),
         transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))
+    ])
+
+    standard_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))
     ])
 
     train_set = datasets.CIFAR10(root=data_dir, train=True, download=True, transform=train_transform)
-    validation_set = datasets.CIFAR10(root=data_dir, train=True, download=True, transform=train_transform)
-    test_set = datasets.CIFAR10(root=data_dir, train=False, download=True, transform=train_transform)
+    validation_set = datasets.CIFAR10(root=data_dir, train=True, download=True, transform=standard_transform)
+    test_set = datasets.CIFAR10(root=data_dir, train=False, download=True, transform=standard_transform)
 
+    # If no subset was specified, use the whole training set.
     if subset_size is None:
         subset_size = len(train_set)
-    if subset_size > len(train_set):
-        raise ValueError(f"subset_size {subset_size} cannot be larger than size of full training data.")
+    elif subset_size > len(train_set):
+        # Default to the full training set if subset size provided is larger than training set.
+        subset_size = len(train_set)
+        print("Provided subset size is larger than training dataset. Using full training set instead.")
 
     # Split training data into training and validation sets
     data_indices = list(range(len(train_set)))
