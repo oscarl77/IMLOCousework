@@ -17,6 +17,8 @@ def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
     train_transform = transforms.Compose([
         transforms.RandomHorizontalFlip(),
         transforms.RandomCrop(32, 4),
+        transforms.RandomRotation(15),
+        transforms.ColorJitter(0.2, 0.2, 0.2, 0.2),
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))
     ])
