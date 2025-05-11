@@ -23,7 +23,7 @@ def train_loop(model, epochs, loss_fn, optimizer, lr_scheduler, train_loader, va
 
     for epoch in range(epochs):
         train_loss, train_accuracy = train_model(model, loss_fn, optimizer, train_loader)
-        val_loss, val_accuracy = validate_model(model, loss_fn, val_loader)
+        val_loss, val_accuracy = validate_model(model, loss_fn, val_loader, device)
 
         train_losses.append(train_loss)
         train_accuracies.append(train_accuracy)
@@ -45,12 +45,12 @@ def train_loop(model, epochs, loss_fn, optimizer, lr_scheduler, train_loader, va
         # Stop training if model performance does not improve for a number of epochs
         if no_improvement >= patience:
             print(f"No improvement observed over {patience} epochs, early stopping.")
-            print(f"Final Val Loss: {val_loss:.2f}, Final Val Accuracy: {val_accuracy}")
+            print(f"Final Val Loss: {val_loss:.3f}, Final Val Accuracy: {val_accuracy}%")
             break
 
     return train_losses, train_accuracies, val_losses, val_accuracies
 
-def train_model(model, loss_fn, optimizer, train_loader):
+def train_model(model, loss_fn, optimizer, train_loader, device):
     """
     Trains the model for one epoch on training dataset.
     :param model: The model being trained.
