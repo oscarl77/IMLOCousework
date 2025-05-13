@@ -23,7 +23,7 @@ def train_loop(model, epochs, loss_fn, optimizer, lr_scheduler, train_loader, va
 
     for epoch in range(epochs):
         train_loss, train_accuracy = train_model(model, loss_fn, optimizer, train_loader)
-        val_loss, val_accuracy = validate_model(model, loss_fn, val_loader, device)
+        val_loss, val_accuracy = validate_model(model, loss_fn, val_loader)
 
         train_losses.append(train_loss)
         train_accuracies.append(train_accuracy)
