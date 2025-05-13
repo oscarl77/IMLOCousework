@@ -50,7 +50,7 @@ def train_loop(model, epochs, loss_fn, optimizer, lr_scheduler, train_loader, va
 
     return train_losses, train_accuracies, val_losses, val_accuracies
 
-def train_model(model, loss_fn, optimizer, train_loader, device):
+def train_model(model, loss_fn, optimizer, train_loader):
     """
     Trains the model for one epoch on training dataset.
     :param model: The model being trained.
