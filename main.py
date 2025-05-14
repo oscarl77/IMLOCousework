@@ -17,7 +17,7 @@ np.random.seed(42)
 #torch.set_num_threads(1)
 
 def main():
-    experiment_name = 'CNN_v1.00'
+    experiment_name = 'CNN_v1.13'
     print(f"----------------{experiment_name}----------------")
 
     # ensure cpu usage
@@ -26,17 +26,17 @@ def main():
     # define hyperparameters
     batch_size = 128
     subset_size = None
-    epochs = 10
+    epochs = 100
     learning_rate = 0.001
 
     log_experiment_details(experiment_name, subset_size, batch_size, learning_rate,
-                           data_augmentation="Horizontal flipping, Cropping, Rotation and ColorJitter",
-                           regularisation="None",
-                           conv_layers="6",
+                           data_augmentation="Cropping, ColorJitter",
+                           regularisation="weight decay of 1e-5",
+                           conv_layers="8",
                            fc_layers="1",
-                           additional_notes="Max pooling every 2 layers,"
-                                            "batch normalization,"
-                                            "Learning rate: 0.001")
+                           additional_notes="GELU,"
+                                            "2 Max pooling layers"
+                                            "Dropout in conv layers (0.1, 0.2, 0.2, 0.3)")
 
     # load datasets
     train_loader, val_loader, test_loader = get_data_loaders(batch_size=batch_size, subset_size=subset_size)
@@ -48,9 +48,9 @@ def main():
     loss_fn = torch.nn.CrossEntropyLoss()
 
     # Use adam optimizer
-    adam_optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    adam_optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=1e-5)
 
-    lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=adam_optimizer, mode='min', factor=0.5, patience=3)
+    lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=adam_optimizer, mode='min', factor=0.5, patience=2)
 
     # Run training loop for model training and validation
     train_losses, train_accuracies, val_losses, val_accuracies = train_loop(
