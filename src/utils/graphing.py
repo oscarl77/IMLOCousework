@@ -33,6 +33,7 @@ def _plot_losses(epochs, train_losses, val_losses):
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
+    plt.grid(True)
 
 def _plot_accuracies(epochs, train_accuracies, val_accuracies):
     """
@@ -49,13 +50,14 @@ def _plot_accuracies(epochs, train_accuracies, val_accuracies):
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
+    plt.grid(True)
 
 def save_plots(experiment_name):
     """
     Saves loss and accuracy graphs plots into the current experiment directory.
     :param experiment_name: Name of the experiment.
     """
-    save_path = f'./experiments/{experiment_name}'
+    save_path = f'experiments/{experiment_name}'
     os.makedirs(save_path, exist_ok=True)
     plot_filename = os.path.join(save_path, 'loss_accuracy_plot.png')
     plt.savefig(plot_filename)
