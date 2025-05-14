@@ -2,6 +2,8 @@ import numpy as np
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, Subset
 
+from src.utils.AlternatingFlipDataset import AlternatingFlipDataset
+
 def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
     """
     Splits and loads training, validation and test datasets.
@@ -15,9 +17,7 @@ def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
 
     # Define two transforms, one for training and the other for validation + testing.
     train_transform = transforms.Compose([
-        transforms.RandomHorizontalFlip(),
         transforms.RandomCrop(32, 4),
-        transforms.RandomRotation(15),
         transforms.ColorJitter(0.2, 0.2, 0.2, 0.2),
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))
@@ -45,6 +45,7 @@ def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
     train_indices, val_indices = split_indices(data_indices, validation_split, subset_size)
 
     train_set = Subset(train_set, train_indices)
+    #train_set = AlternatingFlipDataset(train_set)
     validation_set = Subset(validation_set, val_indices)
 
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0)
