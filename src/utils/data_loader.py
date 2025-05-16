@@ -2,8 +2,6 @@ import numpy as np
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, Subset
 
-from src.utils.AlternatingFlipDataset import AlternatingFlipDataset
-
 def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
     """
     Splits and loads training, validation and test datasets.
@@ -17,15 +15,17 @@ def get_data_loaders(batch_size, validation_split=0.2, subset_size=None):
 
     # Define two transforms, one for training and the other for validation + testing.
     train_transform = transforms.Compose([
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomRotation(30),
         transforms.RandomCrop(32, 4),
         transforms.ColorJitter(0.2, 0.2, 0.2, 0.2),
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))
+        transforms.Normalize(mean=(0.4914, 0.4822, 0.4465), std=(0.2023, 0.1994, 0.2010))
     ])
 
     standard_transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))
+        transforms.Normalize(mean=(0.4914, 0.4822, 0.4465), std=(0.2023, 0.1994, 0.2010))
     ])
 
     train_set = datasets.CIFAR10(root=data_dir, train=True, download=True, transform=train_transform)
