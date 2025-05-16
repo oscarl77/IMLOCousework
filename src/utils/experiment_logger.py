@@ -2,6 +2,9 @@ import json
 import logging
 import os
 
+import torch
+
+
 def setup_experiment_logger(experiment_name, filename="training.log"):
     """
     Sets up a logger to save experiment details to track training progress.
@@ -54,3 +57,6 @@ def log_experiment_details(experiment_name, subset_size, batch_size, learning_ra
     }
     with open(config_filename, 'w') as f:
         json.dump(config, f, indent=4)
+
+def save_model(model, path, filename="model.pth"):
+    torch.save(model.state_dict(), os.path.join(path, filename))
