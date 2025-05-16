@@ -21,10 +21,8 @@ def train_loop(model, epochs, loss_fn, optimizer, lr_scheduler, train_loader, va
     no_improvement = 0
     global_loss = 100
 
-    #train_dataset = train_loader.dataset
-
     for epoch in range(epochs):
-        train_loss, train_accuracy = train_model(model, epoch, loss_fn, optimizer, train_loader)
+        train_loss, train_accuracy = train_model(model, loss_fn, optimizer, train_loader)
         val_loss, val_accuracy = validate_model(model, loss_fn, val_loader)
 
         train_losses.append(train_loss)
@@ -52,7 +50,7 @@ def train_loop(model, epochs, loss_fn, optimizer, lr_scheduler, train_loader, va
 
     return train_losses, train_accuracies, val_losses, val_accuracies
 
-def train_model(model, epoch, loss_fn, optimizer, train_loader):
+def train_model(model, loss_fn, optimizer, train_loader):
     """
     Trains the model for one epoch on training dataset.
     :param model: The model being trained.
@@ -62,7 +60,6 @@ def train_model(model, epoch, loss_fn, optimizer, train_loader):
     :return: tuple: (training loss, training accuracy)
     """
     model.train()
-    #dataset.set_epoch(epoch)
     running_loss = 0.0
     correct = 0
     total = 0
