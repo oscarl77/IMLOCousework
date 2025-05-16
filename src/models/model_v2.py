@@ -14,7 +14,6 @@ class CNNModelV2(nn.Module):
             nn.BatchNorm2d(32),
             nn.GELU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Dropout(0.1),
         )
 
         self.block2 = nn.Sequential(
@@ -24,7 +23,7 @@ class CNNModelV2(nn.Module):
             nn.Conv2d(64, 64, kernel_size=3),
             nn.BatchNorm2d(64),
             nn.GELU(),
-            nn.Dropout(0.2),
+            nn.Dropout(0.1),
         )
 
         self.block3 = nn.Sequential(
