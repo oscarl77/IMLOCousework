@@ -1,0 +1,11 @@
+name: imlocoursework
+channels:
+  - defaults
+dependencies:
+  - pip=25.1=pyhc872135_2
+  - python=3.11.11=hb885b13_0
+  - pip:
+      - matplotlib==3.10.3
+      - numpy==2.2.5
+      - torch==2.7.0
+      - torchvision==0.22.0
