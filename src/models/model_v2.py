@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-class CNNModelV2(nn.Module):
+class CNNClassifier(nn.Module):
 
     def __init__(self, output_features=10):
         super().__init__()
