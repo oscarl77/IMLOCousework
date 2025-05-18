@@ -19,7 +19,6 @@ def plot_loss_and_accuracies(train_losses, train_accuracies, val_losses, val_acc
     _plot_accuracies(epochs, train_accuracies, val_accuracies)
     plt.tight_layout()
     save_plots(experiment_name)
-    plt.show()
 
 def _plot_losses(epochs, train_losses, val_losses):
     """

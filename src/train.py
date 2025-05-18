@@ -4,7 +4,7 @@ import numpy as np
 from torch import nn
 
 from src.config import config
-from src.models.model_v2 import CNNClassifier
+from src.model import CNNClassifier
 from src.utils.data_preprocessor import get_data_loaders
 from src.scripts.train_one_epoch import train_one_epoch
 from src.scripts.validate_one_epoch import validate_one_epoch
@@ -20,7 +20,7 @@ def train():
     val_losses, val_accuracies = [], []
 
     # Define early stopping parameters
-    patience = 5
+    patience = config["early_stopping_patience"]
     no_improvement = 0
     global_loss = 100
     model = CNNClassifier()
