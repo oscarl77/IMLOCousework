@@ -1,7 +1,7 @@
 import torch
 import random
 import numpy as np
-from torch import nn, device
+from torch import nn
 
 from src.config import config
 from src.models.model_v2 import CNNClassifier
@@ -11,7 +11,7 @@ from src.scripts.validate_one_epoch import validate_one_epoch
 from src.utils.graphing import plot_loss_and_accuracies
 from src.utils.logger import save_config, save_model
 
-def training():
+def train():
     MODE = "train"
     _setup_experiment()
 
@@ -23,7 +23,7 @@ def training():
     patience = 5
     no_improvement = 0
     global_loss = 100
-    model = CNNClassifier().to(torch.device("mps"))
+    model = CNNClassifier()
     optimizer = _get_optimizer(model)
     loss_fn = _get_loss_fn()
     lr_scheduler = _get_lr_scheduler(optimizer)
@@ -39,9 +39,9 @@ def training():
         val_accuracies.append(val_acc)
 
         # Adjust learning rate
-        if config["training"]["optimizer"]["type"] == "sgd":
+        if config["training"]["lr_scheduler"]["type"] == "cosine":
             lr_scheduler.step()
-        elif config["training"]["optimizer"]["type"] == "adam":
+        elif config["training"]["lr_scheduler"]["type"] == "plateau":
             lr_scheduler.step(val_loss)
 
         print(f'Epoch {epoch}, Training Loss: {train_loss:.4f}, Validation Loss: {val_loss:.4f}')
@@ -111,4 +111,4 @@ def _get_lr_scheduler(optimizer):
     return lr_scheduler
 
 if __name__ == "__main__":
-    training()
+    train()

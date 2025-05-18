@@ -1,6 +1,6 @@
 config = {
 
-    "experiment_name": "CNNClassifier_89.73",
+    "experiment_name": "CNNClassifier",
 
     "model_name": "CNNClassifier_89.73",
 
