@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from src.models.model_v2 import CNNClassifier
+from src.model import CNNClassifier
 from src.config import config
 from src.utils.data_preprocessor import get_data_loaders
 
@@ -14,7 +14,7 @@ def test():
 
 def _load_model():
     """Load in a trained CNN model"""
-    path = config["experiment_dir"] + config["model_name"] + "/model.pth"
+    path = config["trained_model_path"]
     model = CNNClassifier()
     model.load_state_dict(torch.load(path))
     return model
