@@ -34,7 +34,7 @@ Final model achieved a training accuracy of 89.79% and a test accuracy of 89.72%
   not overwrite previously trained models along with their logs and performance graphs.
 - To train the model, in the project root directory, run:
   
-  python -m src.train
+  conda run -n imlocoursework python -m src.train
   
 - This will create a data folder in the root directory, and once training is complete, will save the model config,
   performance graphs and saved model in the experiments folder.
@@ -43,7 +43,7 @@ Final model achieved a training accuracy of 89.79% and a test accuracy of 89.72%
 ### Testing
 - To test the model, in the project root directory, run:
 
-  python -m src.test
+  conda run -n imlocoursework python -m src.test
 
 - By default, this will test the submitted trained model, with its path also defined in config.py.
 - Test loss and test accuracy are displayed in the terminal after testing.
