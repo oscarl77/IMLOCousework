@@ -9,7 +9,7 @@ class CNNClassifier(nn.Module):
     Each block contains two convolutional layers with batch normalization and GELU activation.
     Max pooling is applied every second block.
     Dropout in blocks 2-4, beginning at 0.1 and increasing by 0.1 each block.
-
+    Final FC layer uses ReLU activation instead of GELU activation.
     """
 
     def __init__(self, output_features=10):
