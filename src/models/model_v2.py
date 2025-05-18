@@ -2,6 +2,15 @@ import torch
 import torch.nn as nn
 
 class CNNClassifier(nn.Module):
+    """
+    CNN for CIFAR-10 dataset image classification.
+
+    Model follows a block-structure similar to VGG.
+    Each block contains two convolutional layers with batch normalization and GELU activation.
+    Max pooling is applied every second block.
+    Dropout in blocks 2-4, beginning at 0.1 and increasing by 0.1 each block.
+
+    """
 
     def __init__(self, output_features=10):
         super().__init__()
@@ -10,7 +19,7 @@ class CNNClassifier(nn.Module):
             nn.Conv2d(3, 32, kernel_size=3, padding=1),
             nn.BatchNorm2d(32),
             nn.GELU(),
-            nn.Conv2d(32, 32, kernel_size=3),
+            nn.Conv2d(32, 32, kernel_size=3,),
             nn.BatchNorm2d(32),
             nn.GELU(),
             nn.MaxPool2d(kernel_size=2, stride=2),

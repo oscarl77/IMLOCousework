@@ -13,10 +13,8 @@ def train_one_epoch(model, train_loader, optimizer, loss_fn):
     running_loss = 0.0
     correct = 0
     total = 0
-    device = torch.device("mps")
 
     for inputs, labels in train_loader:
-        inputs, labels = inputs.to(device), labels.to(device)
         optimizer.zero_grad()  # Reset gradients to zero
         outputs = model(inputs)
         loss = loss_fn(outputs, labels)

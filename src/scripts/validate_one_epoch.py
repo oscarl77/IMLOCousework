@@ -13,13 +13,10 @@ def validate_one_epoch(model, val_loader, loss_fn):
     correct = 0.0
     total = 0
 
-    device = torch.device("mps")
-
     # As weights are not being updated during validation, there's no need
     # to track the gradients.
     with torch.no_grad():
         for inputs, labels in val_loader:
-            inputs, labels = inputs.to(device), labels.to(device)
             outputs = model(inputs)
             loss = loss_fn(outputs, labels)
             running_loss += loss.item()
