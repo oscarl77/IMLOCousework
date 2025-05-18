@@ -2,9 +2,9 @@ config = {
 
     "experiment_name": "CNNClassifier",
 
-    "model_name": "CNNClassifier_89.73",
+    "experiment_dir": "./experiments/",
 
-    "experiment_dir": "../experiments/",
+    "trained_model_path": "./models/CNNClassifier_89.73/model.pth",
 
     "random_seed": 22,
 
@@ -12,6 +12,7 @@ config = {
         "batch_size": 128,
         "learning_rate": 0.001,
         "epochs": 50,
+        "early_stopping_patience": 5,
         "loss_function": "cross_entropy",
 
         "optimizer": {
@@ -19,6 +20,7 @@ config = {
             "weight_decay": 1e-4,
             "momentum": None
         },
+
         "lr_scheduler": {
             "type": "plateau",
             "factor": 0.5,
@@ -54,7 +56,7 @@ config = {
     },
 
     "data": {
-        "directory": "../data",
+        "directory": "./data",
         "num_workers": 0,
         "validation_split": 0.2
     },
