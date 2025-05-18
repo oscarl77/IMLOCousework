@@ -22,8 +22,8 @@ Final model achieved a training accuracy of 89.79% and a test accuracy of 89.72%
 ## Setup Instructions
 - Once in the unzipped folder directory, open a terminal and run:
 
-  conda env create -f environemnt.yml
-  conda activate imlocoursework
+  - conda env create -f environemnt.yml
+  - conda activate imlocoursework
 
 ## Running the project
 - A config.py file in src contains all parameters to recreate the training and testing of the provided model.
