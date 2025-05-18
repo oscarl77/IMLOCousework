@@ -19,7 +19,7 @@ class CNNClassifier(nn.Module):
             nn.Conv2d(3, 32, kernel_size=3, padding=1),
             nn.BatchNorm2d(32),
             nn.GELU(),
-            nn.Conv2d(32, 32, kernel_size=3,),
+            nn.Conv2d(32, 32, kernel_size=3),
             nn.BatchNorm2d(32),
             nn.GELU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
